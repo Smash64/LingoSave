@@ -1,0 +1,61 @@
+{
+  "id": "arte-acceptance-001",
+  "title": "Multilingual acceptance fixture",
+  "extractor_key": "ArteTV",
+  "webpage_url": "https://www.arte.tv/en/videos/acceptance-001/",
+  "formats": [
+    {
+      "format_id": "video-1080",
+      "ext": "mp4",
+      "vcodec": "avc1.640028",
+      "acodec": "none",
+      "width": 1920,
+      "height": 1080,
+      "tbr": 4200
+    },
+    {
+      "format_id": "video-720",
+      "ext": "mp4",
+      "vcodec": "avc1.4d401f",
+      "acodec": "none",
+      "width": 1280,
+      "height": 720,
+      "tbr": 2200
+    },
+    {
+      "format_id": "audio-fr-original",
+      "ext": "m4a",
+      "vcodec": "none",
+      "acodec": "mp4a.40.2",
+      "language": "fr",
+      "format_note": "Original",
+      "abr": 128
+    },
+    {
+      "format_id": "audio-de-dub",
+      "ext": "m4a",
+      "vcodec": "none",
+      "acodec": "mp4a.40.2",
+      "language": "de",
+      "format_note": "Dubbed",
+      "abr": 128
+    },
+    {
+      "format_id": "combined-fr-720",
+      "ext": "mp4",
+      "vcodec": "avc1.4d401f",
+      "acodec": "mp4a.40.2",
+      "language": "fr",
+      "height": 720,
+      "abr": 96
+    }
+  ],
+  "subtitles": {
+    "fr": [{ "ext": "vtt", "url": "https://fixture.invalid/fr.vtt" }],
+    "fr-acc": [{ "ext": "vtt", "url": "https://fixture.invalid/fr-acc.vtt" }]
+  },
+  "automatic_captions": {
+    "fr": [{ "ext": "vtt", "url": "https://fixture.invalid/fr-auto.vtt" }],
+    "en": [{ "ext": "vtt", "url": "https://fixture.invalid/en-auto.vtt" }]
+  }
+}

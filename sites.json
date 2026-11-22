@@ -1,0 +1,150 @@
+[
+  {
+    "entryTemplate": "https://www.youtube.com/watch?v={id}",
+    "extractorPattern": "(?i)^Youtube",
+    "domains": [
+      "youtube.com",
+      "youtu.be",
+      "youtube-nocookie.com"
+    ],
+    "id": "youtube",
+    "label": "YouTube",
+    "idPattern": "\\A[A-Za-z0-9_-]{6,20}\\z"
+  },
+  {
+    "entryTemplate": "https://www.bilibili.com/video/{id}",
+    "extractorPattern": "(?i)^Bili",
+    "domains": [
+      "bilibili.com",
+      "b23.tv"
+    ],
+    "id": "bilibili",
+    "label": "Bilibili",
+    "idPattern": "\\ABV[A-Za-z0-9]+\\z"
+  },
+  {
+    "id": "arte",
+    "label": "ARTE",
+    "domains": [
+      "arte.tv"
+    ]
+  },
+  {
+    "mediaType": "audio",
+    "domains": [
+      "radiofrance.fr"
+    ],
+    "id": "radiofrance",
+    "pathPattern": "^/(franceculture|franceinter|franceinfo|francemusique|fip|mouv)/podcasts/",
+    "label": "Radio France",
+    "pathHint": "请提供 Radio France 播客单集或系列链接。"
+  },
+  {
+    "id": "ina",
+    "label": "INA Podcasts",
+    "domains": [
+      "podcasts.ina.fr"
+    ],
+    "mediaType": "audio",
+    "pathPattern": "^/main/pub/(?:emission|podcast)/[0-9]+(?:-[\\w.%~-]+)?/?$",
+    "pathHint": "请提供 INA 播客的系列或单集页面链接。"
+  },
+  {
+    "entryTemplate": "https://vimeo.com/{id}",
+    "extractorPattern": "(?i)^Vimeo",
+    "domains": [
+      "vimeo.com"
+    ],
+    "id": "vimeo",
+    "label": "Vimeo",
+    "idPattern": "\\A[0-9]+\\z",
+    "note": "当前解析需要登录 Cookie。请先在浏览器登录 Vimeo，再导入对应网站的 Cookie。"
+  },
+  {
+    "entryTemplate": "https://www.dailymotion.com/video/{id}",
+    "extractorPattern": "(?i)^Dailymotion",
+    "domains": [
+      "dailymotion.com",
+      "dai.ly"
+    ],
+    "id": "dailymotion",
+    "label": "Dailymotion",
+    "idPattern": "\\Ax[A-Za-z0-9]+\\z"
+  },
+  {
+    "id": "ted",
+    "label": "TED",
+    "domains": [
+      "ted.com"
+    ]
+  },
+  {
+    "entryTemplate": "https://x.com/i/status/{id}",
+    "extractorPattern": "(?i)^Twitter",
+    "domains": [
+      "x.com",
+      "twitter.com",
+      "t.co"
+    ],
+    "id": "twitter",
+    "label": "X / Twitter",
+    "idPattern": "\\A[0-9]+\\z"
+  },
+  {
+    "id": "facebook",
+    "label": "Facebook",
+    "domains": [
+      "facebook.com",
+      "fb.watch"
+    ]
+  },
+  {
+    "id": "instagram",
+    "label": "Instagram",
+    "domains": [
+      "instagram.com"
+    ],
+    "note": "建议粘贴帖子或 Reels 视频链接；当前引擎的账号主页提取器不可用。"
+  },
+  {
+    "id": "tiktok",
+    "label": "TikTok",
+    "domains": [
+      "tiktok.com"
+    ]
+  },
+  {
+    "id": "douyin",
+    "label": "抖音",
+    "domains": [
+      "douyin.com",
+      "iesdouyin.com"
+    ]
+  },
+  {
+    "id": "xiaohongshu",
+    "label": "小红书",
+    "domains": [
+      "xiaohongshu.com",
+      "xhslink.com"
+    ]
+  },
+  {
+    "entryTemplate": "https://www.acfun.cn/v/ac{id}",
+    "extractorPattern": "(?i)^AcFunVideo$",
+    "domains": [
+      "acfun.cn"
+    ],
+    "id": "acfun",
+    "label": "AcFun",
+    "idPattern": "\\A[0-9]+\\z"
+  },
+  {
+    "id": "cctv",
+    "label": "央视网",
+    "domains": [
+      "cctv.com",
+      "cntv.cn"
+    ]
+  }
+]

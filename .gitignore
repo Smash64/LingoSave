@@ -1,0 +1,14 @@
+/.lingosave-data/
+/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/
+.lingosave-partials/
+__pycache__/
+*.py[cod]
+*.exe
+*.dll
+*.zip
+*.part
+*.log
+.env
+.env.*
+cookies.txt
+cookies-*.txt

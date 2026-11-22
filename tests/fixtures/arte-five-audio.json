@@ -1,0 +1,79 @@
+{
+  "subtitles": {},
+  "automatic_captions": {},
+  "formats": [
+    {
+      "acodec": null,
+      "ext": "mp4",
+      "language": "de",
+      "protocol": "m3u8_native",
+      "format_note": "Français [VF]",
+      "format_id": "VF-STF-audio_0-allemand",
+      "url": "https://media.example.invalid/audio/german.m3u8",
+      "vcodec": "none",
+      "manifest_url": "https://media.example.invalid/master.m3u8"
+    },
+    {
+      "acodec": null,
+      "ext": "mp4",
+      "language": "de",
+      "protocol": "m3u8_native",
+      "format_note": "Français [VF]",
+      "format_id": "VF-STF-audio_0-allemand__confort_audio_",
+      "url": "https://media.example.invalid/audio/german-description.m3u8",
+      "vcodec": "none",
+      "manifest_url": "https://media.example.invalid/master.m3u8"
+    },
+    {
+      "acodec": null,
+      "ext": "mp4",
+      "language": "fr",
+      "protocol": "m3u8_native",
+      "format_note": "Français [VF]",
+      "format_id": "VF-STF-audio_0-français__confort_audio_",
+      "url": "https://media.example.invalid/audio/french-description.m3u8",
+      "vcodec": "none",
+      "manifest_url": "https://media.example.invalid/master.m3u8"
+    },
+    {
+      "acodec": null,
+      "ext": "mp4",
+      "language": "mul",
+      "protocol": "m3u8_native",
+      "format_note": "Français [VF]",
+      "format_id": "VF-STF-audio_0-multilingue",
+      "url": "https://media.example.invalid/audio/multilingual.m3u8",
+      "vcodec": "none",
+      "manifest_url": "https://media.example.invalid/master.m3u8"
+    },
+    {
+      "acodec": null,
+      "ext": "mp4",
+      "language": "fr",
+      "protocol": "m3u8_native",
+      "format_note": "Français [VF]",
+      "format_id": "VF-STF-audio_0-français",
+      "url": "https://media.example.invalid/audio/french.m3u8",
+      "vcodec": "none",
+      "manifest_url": "https://media.example.invalid/master.m3u8"
+    },
+    {
+      "acodec": "none",
+      "ext": "mp4",
+      "language": "fr",
+      "protocol": "m3u8_native",
+      "format_note": "Français [VF]",
+      "tbr": 5000,
+      "format_id": "VF-STF-1080",
+      "url": "https://media.example.invalid/video/1080.m3u8",
+      "height": 1080,
+      "vcodec": "avc1.64002a"
+    }
+  ],
+  "id": "arte-five-audio",
+  "duration": 42,
+  "webpage_url": "https://www.arte.tv/fr/videos/115508-001-A/le-monde-des-croyances/",
+  "extractor_key": "ArteTV",
+  "extractor": "ArteTV",
+  "title": "ARTE five audio renditions fixture"
+}

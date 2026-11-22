@@ -1,0 +1,20 @@
+{
+  "id": "youtube-acceptance-single",
+  "title": "Single audio with no subtitles",
+  "extractor_key": "Youtube",
+  "webpage_url": "https://www.youtube.com/watch?v=acceptance01",
+  "formats": [
+    {
+      "format_id": "combined-only",
+      "ext": "mp4",
+      "vcodec": "avc1.42001e",
+      "acodec": "mp4a.40.2",
+      "language": "en",
+      "width": 1280,
+      "height": 720,
+      "abr": 96
+    }
+  ],
+  "subtitles": {},
+  "automatic_captions": {}
+}

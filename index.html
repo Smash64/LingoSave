@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f4f0" />
+    <title>LingoSave · 媒体下载</title>
+    <link rel="icon" type="image/x-icon" sizes="16x16 20x20 24x24 32x32 40x40 48x48 64x64 80x80 96x96 128x128 192x192 256x256" href="/assets/icons/lingosave-app-v2.ico" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+    <script src="./batch.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="主导航">
+        <div class="brand"><img class="brand-mark" src="/assets/icons/lingosave-app.png?v=brand03-fit-v2" alt="" /><div><strong>LingoSave</strong><small>视频与语言资料下载</small></div></div>
+        <nav class="nav-list" aria-label="页面">
+          <button class="nav-button is-active" data-page="batch" type="button" aria-current="page"><span class="nav-icon" aria-hidden="true">＋</span><span>新建下载</span></button>
+          <button class="nav-button" data-page="tasks" type="button"><span class="nav-icon" aria-hidden="true">▤</span><span>下载任务</span><span id="nav-count" class="nav-count" hidden>0</span></button>
+          <button class="nav-button" data-page="history" type="button"><span class="nav-icon" aria-hidden="true">↶</span><span>链接历史</span></button>
+          <button class="nav-button" data-page="settings" type="button"><span class="nav-icon" aria-hidden="true">⚙</span><span>设置</span></button>
+        </nav>
+        <div class="sidebar-foot"><span class="status-dot" aria-hidden="true"></span><span id="sidebar-service-label">正在连接本机服务</span></div>
+      </aside>
+
+      <div class="workspace">
+        <nav class="mobile-nav" aria-label="移动页面"><button class="is-active" data-page="batch" type="button" aria-current="page">新建下载</button><button data-page="tasks" type="button">下载任务</button><button data-page="history" type="button">链接历史</button><button data-page="settings" type="button">设置</button></nav>
+        <main class="content">
+          <section id="page-batch" class="page is-visible" aria-labelledby="batch-links-title" aria-hidden="false">
+            <section class="panel" aria-labelledby="batch-links-title">
+              <div class="section-head"><div><h2 id="batch-links-title">视频、广播节目或播放列表链接</h2><p>每行一条，也可直接粘贴含有多条链接的文字；相同链接会合并。</p></div></div>
+              <label class="sr-only" for="batch-urls">视频、广播节目和播放列表链接</label>
+              <p id="supported-site-list" class="helper-text">连接本机服务后显示支持的平台列表。</p>
+              <textarea id="batch-urls" class="batch-textarea" rows="6" placeholder="https://www.youtube.com/watch?v=...&#10;https://www.youtube.com/playlist?list=...&#10;https://www.bilibili.com/video/..." spellcheck="false" aria-describedby="batch-input-count batch-input-error"></textarea>
+              <div class="batch-input-footer">
+                <div class="batch-input-status"><span id="batch-input-count">已输入 0 条链接</span><span id="batch-action-summary" role="status"></span></div>
+                <div class="batch-input-actions">
+                  <button id="batch-preview-button" class="button button-secondary" type="button" disabled>解析链接</button>
+                  <button id="batch-start-button" class="button button-primary" type="button" disabled>下载</button>
+                </div>
+              </div>
+              <p id="batch-input-error" class="field-error" role="alert" hidden></p>
+              <p id="batch-start-error" class="field-error" role="alert" hidden></p>
+              <div class="batch-save-row"><label class="field"><span>保存目录</span><input id="batch-path" type="text" spellcheck="false" placeholder="选择文件夹，或输入 Windows 绝对路径" aria-describedby="batch-path-hint" /></label><button id="batch-folder-button" class="button button-secondary" type="button">选择文件夹</button></div>
+              <p id="batch-path-hint" class="helper-text">可以手动输入路径，或用 Windows 文件夹选择窗口选取目录。取消选择会保留原路径。</p>
+              <div id="recent-folders" class="recent-folders" hidden><div class="recent-folders-heading"><strong>最近使用</strong><button id="clear-recent-folders" type="button">清除记录</button></div><div id="recent-folder-list" class="recent-folder-list"></div></div>
+              <div class="notice" id="batch-service-notice"><span class="notice-icon" aria-hidden="true">ⓘ</span><p id="batch-service-message" role="status">正在检查本机下载服务…</p></div>
+              <details class="recent-links-disclosure"><summary>最近输入的链接 <span id="recent-link-count">0 / 10</span></summary><div class="history-inline-heading"><span>按单条链接去重保存，最多 10 条。</span><button class="history-button history-delete clear-recent-links" type="button">清空输入历史</button></div><div id="recent-link-list" class="history-link-list"></div></details>
+            </section>
+
+            <section id="batch-preview-panel" class="panel" aria-labelledby="batch-preview-title" hidden>
+              <div class="section-head"><div><h2 id="batch-preview-title">资源与轨道</h2><p>勾选需要的视频，默认全选。点击“解析音轨与字幕”可选择对应轨道。</p></div></div>
+              <div id="batch-preview-summary" class="batch-summary" role="status"></div>
+              <div id="batch-preview-list" class="batch-preview-list"></div>
+            </section>
+
+            <section class="panel" aria-labelledby="batch-config-title">
+              <div class="section-head"><div><h2 id="batch-config-title">下载设置</h2><p>视频、独立音轨和外部字幕可以分别下载。</p></div></div>
+              <div class="media-parts" role="group" aria-label="下载内容">
+                <label class="media-part"><input id="batch-part-video" type="checkbox" checked /><span><strong>完整视频</strong><small>包含画面和播放声音</small></span></label>
+                <label class="media-part"><input id="batch-part-audio" type="checkbox" /><span><strong>独立音轨</strong><small>额外导出所选音轨文件</small></span></label>
+                <label class="media-part"><input id="batch-part-subtitles" type="checkbox" checked /><span><strong>外部字幕</strong><small>额外保存所选字幕文件</small></span></label>
+              </div>
+              <p class="helper-text media-parts-help">完整视频包含声音，字幕单独保存。仅选音轨或字幕时，只下载所选内容；没有对应资源则说明原因并跳过。</p>
+              <div class="config-grid batch-config-grid">
+                <label id="batch-quality-field" class="field"><span>最高画质</span><select id="batch-quality"><option value="720p">720p</option><option value="1080p" selected>1080p</option><option value="1440p">2K（1440p）</option><option value="2160p">4K（2160p）</option><option value="best">最高可用</option></select></label>
+                <label id="batch-container-field" class="field"><span>视频格式</span><select id="batch-container" title="下载后保存的文件格式"><option value="mkv">MKV</option><option value="mp4">MP4</option></select></label>
+              </div>
+              <div id="batch-audio-formats" class="batch-subtitle-box"><div class="batch-option-heading"><strong>音频格式（可多选）</strong><span>原始音频保留原编码；MP3 需要时转换，同时选择共用下载源。</span></div>
+                <div class="batch-language-choices" role="group" aria-label="音频格式"><label><input type="checkbox" value="original" checked />原始音频</label><label><input type="checkbox" value="mp3" />MP3</label></div>
+              </div>
+              <div id="batch-audio-box" class="batch-subtitle-box"><div class="batch-option-heading"><strong>音轨语言偏好</strong><span>用于尚未逐条解析的链接和播放列表；已解析的单个视频可在上方精确选择。</span></div>
+                <div class="batch-language-choices" role="group" aria-label="音轨语言偏好">
+                  <label><input type="checkbox" value="zh" />Chinese</label><label><input type="checkbox" value="en" />English</label><label><input type="checkbox" value="fr" checked />French</label><label><input type="checkbox" value="de" />German</label><label><input type="checkbox" value="it" />Italian</label><label><input type="checkbox" value="pt" />Portuguese</label><label><input type="checkbox" value="es" />Spanish</label>
+                </div>
+              </div>
+              <div id="batch-subtitle-box" class="batch-subtitle-box"><div class="batch-option-heading"><strong>字幕语言偏好</strong><span>只下载网站实际提供的字幕，不生成缺失语言。</span></div>
+                <div id="batch-subtitle-languages" class="batch-language-choices" role="group" aria-label="字幕语言偏好">
+                  <label><input type="checkbox" value="zh" />Chinese</label><label><input type="checkbox" value="en" />English</label><label><input type="checkbox" value="fr" checked />French</label><label><input type="checkbox" value="de" />German</label><label><input type="checkbox" value="it" />Italian</label><label><input type="checkbox" value="pt" />Portuguese</label><label><input type="checkbox" value="es" />Spanish</label>
+                </div>
+                <div class="batch-option-heading batch-subtitle-format-heading"><strong id="subtitle-format-title">字幕格式</strong></div>
+                <div id="batch-subtitle-format" class="batch-language-choices" role="group" aria-labelledby="subtitle-format-title"><label><input type="checkbox" value="srt" checked />SRT</label><label><input type="checkbox" value="vtt" />VTT</label><label><input type="checkbox" value="docx" />Word（仅正文）</label></div>
+              </div>
+              <p class="helper-text">播放列表的每集轨道可能不同。下载时按每集实际可用轨道匹配语言偏好；缺失的独立文件会在任务中说明。</p>
+            </section>
+          </section>
+
+          <section id="page-tasks" class="page" aria-labelledby="tasks-title" aria-hidden="true">
+            <div class="page-heading"><div><p class="eyebrow">DOWNLOAD QUEUE</p><h1 id="tasks-title">下载任务</h1><p>查看进度和速度，可暂停或继续下载。支持续传的资源在断网后保留数据并自动重试。</p></div></div>
+            <div id="tasks-summary" class="tasks-summary" role="status"></div>
+            <div class="tasks-toolbar"><label class="task-concurrency-label" for="task-concurrency"><span>同时下载任务数</span><select id="task-concurrency" aria-describedby="task-records-hint"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></label><button id="clear-task-records" class="button button-secondary" type="button" title="清空已结束的任务记录，保留下载文件和未结束的任务">清空任务记录</button></div>
+            <p id="task-records-hint" class="helper-text task-records-hint">默认同时下载 3 个任务。清除记录保留已下载文件；下载中或已暂停的任务需先取消。</p>
+            <div id="real-tasks-list" class="tasks-list"></div>
+          </section>
+
+          <section id="page-history" class="page" aria-labelledby="history-title" aria-hidden="true">
+            <div class="page-heading"><div><p class="eyebrow">LINK HISTORY</p><h1 id="history-title">链接历史</h1><p>回填最近输入的链接，或查看并重试下载失败的资源。记录在本机保存，重启后保留。</p></div><button id="refresh-link-history" class="button button-secondary" type="button">刷新记录</button></div>
+            <p id="history-message" class="helper-text" role="status"></p>
+            <section class="panel" aria-labelledby="history-recent-title">
+              <div class="history-panel-heading"><div><h2 id="history-recent-title">最近输入</h2><p class="helper-text">按单条链接去重，保留最近 10 条。回填后可以修改下载设置。</p></div><button class="history-button history-delete clear-recent-links" type="button">清空输入历史</button></div>
+              <div id="history-recent-link-list" class="history-link-list"></div>
+            </section>
+            <section class="panel" aria-labelledby="failed-history-title">
+              <div class="history-panel-heading"><div><h2 id="failed-history-title">下载失败记录</h2><p id="failed-link-summary" class="helper-text" role="status">0 条记录</p></div><button id="clear-failed-links" class="history-button history-delete" type="button">清空失败记录</button></div>
+              <label class="history-filter"><input id="failed-unresolved-only" type="checkbox" checked />只看未解决</label>
+              <p class="helper-text">重试保留原下载设置和已完成文件；回填链接可修改设置后创建新任务。播放列表中失败的视频分别记录。</p>
+              <div id="failed-link-list" class="history-link-list"></div>
+            </section>
+          </section>
+
+          <section id="page-settings" class="page" aria-labelledby="settings-title" aria-hidden="true">
+            <div class="page-heading"><div><p class="eyebrow">PREFERENCES</p><h1 id="settings-title">设置</h1><p>新任务默认使用上一次加入队列时的保存目录。</p></div></div>
+            <section class="panel settings-panel"><div class="section-head"><div><h2>默认保存位置</h2><p>可手动指定下一次下载使用的目录。</p></div></div>
+              <div class="settings-path-row"><label class="field"><span>默认文件夹</span><input id="default-path-input" type="text" spellcheck="false" placeholder="选择文件夹，或输入 Windows 绝对路径" aria-describedby="settings-saved" /></label><button id="default-folder-button" class="button button-secondary" type="button">选择文件夹</button></div>
+              <div class="settings-actions"><button id="save-settings-button" class="button button-primary" type="button">保存默认目录</button><span id="settings-saved" class="saved-note" role="status"></span></div>
+            </section>
+            <section class="panel settings-panel" aria-labelledby="default-parts-title">
+              <div class="section-head"><div><h2 id="default-parts-title">默认下载内容</h2><p>离开设置页时自动保存，用于新任务。</p></div></div>
+              <div class="batch-language-choices" role="group" aria-labelledby="default-parts-title">
+                <label><input id="default-part-video" type="checkbox" checked />完整视频</label>
+                <label><input id="default-part-audio" type="checkbox" />独立音轨</label>
+                <label><input id="default-part-subtitles" type="checkbox" checked />外部字幕</label>
+              </div>
+              <div class="settings-actions"><span id="default-parts-result" class="saved-note" role="status"></span></div>
+            </section>
+            <section class="panel settings-panel" aria-labelledby="cookie-settings-title">
+              <div class="section-head"><div><h2 id="cookie-settings-title">网站 Cookie</h2><p>按网站分别导入本机 Cookie 文件，用于需要登录的视频。</p></div></div>
+              <p id="cookie-settings-message" class="helper-text" role="status">正在读取导入状态…</p>
+              <div id="cookie-sites" class="cookie-sites"></div>
+              <p class="helper-text">导入后显示“待验证”；能否访问视频会在解析或下载时确认。每个网站只使用自身的 Cookie。</p>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
